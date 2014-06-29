@@ -44,6 +44,14 @@
       <%= yield %>
     </div>
 
+    <div id="latlon_menu">
+        <h2><span class="icon close" id="latlon_close"></span>Clicked point: <span id="latlon_coords">(none clicked)</span></h2>
+        <p><a class="button" id="latlon_routefrom">Directions from here</a></p> <!-- TODO translatable strs -->
+        <p><a class="button" id="latlon_routeto">Directions to here</a></p>
+        <p><a class="button" id="latlon_data">Data around here</a></p>
+        <p><a class="button" id="latlon_describe">Where is this?</a></p>
+    </div>
+
     <% unless @user %>
       <div class="welcome">
         <h2><a><span class="icon close"></span></a><%= t 'layouts.intro_header' %></h2>

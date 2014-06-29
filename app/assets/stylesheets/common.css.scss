@@ -2032,6 +2032,19 @@ a.button {
   }
 }
 
+/* buttons in latlon click menu */
+#latlon_menu{
+  p {
+    padding: 3px 10px;
+    text-align: center;
+  }
+  a.button {
+    min-width: 200px;
+  }
+  padding-bottom: 10px;
+  display: none;
+}
+
 /* Rules for doing distinct colour of alternate table rows */
 
 .table0,

@@ -87,6 +87,45 @@ $(document).ready(function () {
     }
   });
 
+  // Click menu for routing
+  map.on('click', function(e) {
+      var precision = OSM.zoomPrecision(map.getZoom());
+      var lat = e.latlng.lat.toFixed(precision);
+      var lon = e.latlng.lng.toFixed(precision);
+      var latlonstr = "" + lat + "," + lon;
+      $('#latlon_coords').html(latlonstr);
+      $('#latlon_routefrom').on('click', function(e) {
+         OSM.router.route("/directions");
+         $("input[name='route_from']").val(latlonstr).change();
+         $('#latlon_menu').hide();
+         // if the other box is also filled in, then trigger a routing request
+         if($("input[name='route_to']")){
+           $("form.directions_form").submit();
+         }
+      });
+      $('#latlon_routeto').on('click', function(e) {
+         OSM.router.route("/directions");
+         $("input[name='route_to']").val(latlonstr).change();
+         $('#latlon_menu').hide();
+         // if the other box is also filled in, then trigger a routing request
+         if($("input[name='route_from']")){
+           $("form.directions_form").submit();
+         }
+      });
+      $('#latlon_data').on('click', function(e) {
+         alert("Not implemented yet");
+      });
+      $('#latlon_describe').on('click', function(e) {
+         $('#latlon_menu').hide();
+         OSM.router.route("/search?query=" + encodeURIComponent(latlonstr) + OSM.formatHash(map));
+      });
+      $('#latlon_menu').show();
+      var marker = L.marker(e.latlng, {draggable: true});
+  });
+  $('#latlon_close').on('click', function(e) {
+    $('#latlon_menu').hide();
+  });
+
   var position = $('html').attr('dir') === 'rtl' ? 'topleft' : 'topright';
 
   L.OSM.zoom({position: position})
