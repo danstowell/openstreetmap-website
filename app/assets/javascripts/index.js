@@ -88,7 +88,12 @@ $(document).ready(function () {
   });
 
   // Click menu for routing
+  var clickpointmarker;
   map.on('click', function(e) {
+      $('#latlon_menu').hide();
+      map.removeLayer(clickpointmarker);
+  });
+  map.on('contextmenu', function(e) {
       var precision = OSM.zoomPrecision(map.getZoom());
       var lat = e.latlng.lat.toFixed(precision);
       var lon = e.latlng.lng.toFixed(precision);
@@ -120,7 +125,11 @@ $(document).ready(function () {
          OSM.router.route("/search?query=" + encodeURIComponent(latlonstr) + OSM.formatHash(map));
       });
       $('#latlon_menu').show();
-      var marker = L.marker(e.latlng, {draggable: true});
+      if(clickpointmarker) {
+        map.removeLayer(clickpointmarker);
+      }
+      clickpointmarker = L.marker(e.latlng, {draggable: false});
+      clickpointmarker.addTo(map);
   });
   $('#latlon_close').on('click', function(e) {
     $('#latlon_menu').hide();
